@@ -61,20 +61,21 @@ Indeed, define $A'$ as follows:
 \end{itemize}
 Correctness: the probability that $A'$ indeed returns (at the first position) $x'$ such that $h(x') = h(x)$ is $\geq \epsilon$ from the assumption on $A$. thus the only condition in which $x$ and $x'$ are not an example of a collision is if $x = x'$,  we now note that:
 \begin{align*}
-&\Pr_{x \leftarrow U_n}(A' \mbox{ returns the same element in both indices}) =\\
-&\Pr_{x \leftarrow U_n}(A \mbox{ finds an inverse for } h(x)) * \Pr_{x \leftarrow U_n}(x = x' | h(x) = h(x')) =\\
-& \Pr_{x \leftarrow U_n}(A \mbox{ finds an inverse for } h(x)) * \frac{1}{2^n}
+&\Pr_{x \leftarrow U_n}(x'=x) =\\
+&\Pr_{x \leftarrow U_n}(h(x')=h(x)) * \Pr_{x \leftarrow U_n}(x = x' | h(x) = h(x')) =\\
+& \Pr_{x \leftarrow U_n}(h(x')=h(x)) * \frac{1}{2^n}
 \end{align*}
 where the first equality is due to the fact that $x$ was chosen in random and the second equality is derived from the regularity of $h$. 
 
 Thus we obtain:
 \begin{align*}
 &\Pr_{x \leftarrow U_n}(A' \mbox{ returns a valid collision}) =\\
-& \Pr_{x \leftarrow U_n}(A \mbox{ finds an inverse for } h(x) \cap A'(h(x) \neq x) = \\
-&  \Pr_{x \leftarrow U_n}(A \mbox{ finds an inverse for } h(x)) -  \Pr_{x \leftarrow U_n}(A \mbox{ finds an inverse for } h(x) \cap A(h(x)) = x )=\\
-&  \Pr_{x \leftarrow U_n}(A \mbox{ finds an inverse for } h(x)) -  \Pr_{x \leftarrow U_n}(A(h(x)) = x )=\\
- & \Pr_{x \leftarrow U_n}(A \mbox{ finds an inverse for } h(x)) - \Pr_{x \leftarrow U_n}(A'\mbox{ returns the same element in both indices}) =\\
- &  \Pr_{x \leftarrow U_n}(A \mbox{ finds an inverse for } h(x)) * (1-  \frac{1}{2^n})  \geq \epsilon(1-\frac{1}{2^n})
+& \Pr_{x \leftarrow U_n}(h(x')=h(x) \wedge x' \neq x) = \\
+&  \Pr_{x \leftarrow U_n}(h(x')=h(x) -  \Pr_{x \leftarrow U_n}(h(x')=h(x) \wedge x' = x )=\\
+&  \Pr_{x \leftarrow U_n}(h(x')=h(x)) -  \Pr_{x \leftarrow U_n}(x' = x )=\\
+&  \Pr_{x \leftarrow U_n}(h(x')=h(x)) -  \Pr_{x \leftarrow U_n}(h(x')=h(x)) \cdot \frac{1}{2^n}=\\
+&  \Pr_{x \leftarrow U_n}(h(x')=h(x)) \cdot (1-\frac{1}{2^n}) \geq\\
+& \varepsilon (1-\frac{1}{2^n})
 \end{align*}
 
 Hence $A'$ is a PPT algorithm as requested.
