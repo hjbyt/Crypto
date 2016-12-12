@@ -57,9 +57,10 @@ No, for instance if $h$ is the identity on $\{0,1\}^n$ then it is obvoiusly coll
 Indeed, define $A'$ as follows:
 \begin{itemize}
 \item Choose $x \in \{0,1\}^n$ uniformly from $\{0,1\}^n$.
-\item Return $(A(h(x)), x)$.
+\item Compute x' = A(h(x))
+\item Return $(x', x)$.
 \end{itemize}
-Correctness: the probability that $A'$ indeed returns (at the first position) $x'$ such that $h(x') = h(x)$ is $\geq \epsilon$ from the assumption on $A$. thus the only condition in which $x$ and $x'$ are not an example of a collision is if $x = x'$,  we now note that:
+Correctness: the probability that $A'$ indeed returns $x'$ such that $h(x') = h(x)$ is $\geq \epsilon$ from the assumption on $A$. thus the only condition in which $x$ and $x'$ are not an example of a collision is if $x = x'$,  we now note that:
 \begin{align*}
 \Pr_{x \leftarrow U_n}(x'=x) &=\\
 &=\Pr_{x \leftarrow U_n}(h(x')=h(x)) \cdot \Pr_{x \leftarrow U_n}(x = x' | h(x) = h(x')) \\
