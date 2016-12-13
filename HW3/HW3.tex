@@ -1,4 +1,5 @@
 \documentclass{article}
+\usepackage{listings}
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{blindtext}
@@ -128,5 +129,21 @@ Correctness:
 c'=c \Rightarrow Enc_{pk}(m')=Enc_{pk}(m) \overset{*}{\Rightarrow} m'=m
 \]
 * - because $Enc_{pk}$ is injective (otherwise $c=c'$ would have more than one possible decryption).
+
+\section{}
+
+\pagebreak
+\section{}
+
+\lstinputlisting[language=Python, caption=Q7 Code]{Q7.sage}
+
+\lstinputlisting[caption=Q7 Output]{Q7_output.txt}
+
+\pagebreak
+\section{}
+
+\lstinputlisting[language=Python, caption=Q8 Code]{Q8.sage}
+
+\lstinputlisting[caption=Q8 Output]{Q8_output.txt}
 
 \end{document}
