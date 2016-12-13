@@ -118,17 +118,12 @@ Now we inspect the process of calculating $H$ for both messages, since the outpu
 \section{•}
 We construct an adversary $A$ that on input $(c, pk)$ preforms the following:
 \begin{itemize}
-\item for each message $m' \in M$ (in lexicographic order)
-\begin{itemize}
-\item Calculate $c'=Enc_{pk}(m')$
-\item if $c'=c$ return $m'$
+\item Set $m'$ to be the next message by lexicographical order (if the message space is not bounded we can also think of a lexicographical order).
+\item Get the next element by lexicographic order and define it to be $r$ (next as in after the previous value of $r$, in practice $m$ = $r$ this separation is meant to increase the readability of the next step).
+\item Check for all messages with lexicographic order upto $m'$ if $Enc_{pk, r}(l) = c$ (where $l$ is a message with lexicographic order smaller than $m'$, we go over all of them) if $l$ satisfies this condition return  $l$, check if $m'$ satisfies   $Enc_{pk, r'}(m') = c$ for any $r'$ with lexicographical order smaller or equal to $r$ if $m'$ satisfies the condition for some $r'$ return $m'$ else go back to the previous state.
 \end{itemize}
-\end{itemize}
-Correctness:
-\[
-c'=c \Rightarrow Enc_{pk}(m')=Enc_{pk}(m) \overset{*}{\Rightarrow} m'=m
-\]
-* - because $Enc_{pk}$ is injective (otherwise $c=c'$ would have more than one possible decryption).
+
+Note that since $Enc_{pk,r}$ is an encryption scheme it is one-to-one (otherwise it would not be possible to decipher messages), thus if we find $m'$  and that satisfies for some $r'$: $Enc_{pk,r'}(m') = c = Enc_{pk,r}(m)$ it must also satisfy  $m' =m$. Since we are guaranteed that $c$ has an origin under $Enc_{pk, r}$ (we know that $c$ was generated from encrypting $m$ with some $r$ using this scheme), $A$ will reach it in finite time because the message $m$ has a finite lexicographical order and so does the random element $r$ thus since we go over all possible pairs, we will find a matching pair. Because no other pair can satisfy  $Enc_{pk, r'}(m') = c$  ($Enc_{pk, r}$ is one-to-one) , $A$ will not stop before reaching the pair, hence $A$ will return $m$ with probability $1$.
 
 \section{}
 
