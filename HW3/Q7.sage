@@ -1,8 +1,3 @@
-
-def main():
-    Q7a()
-    Q7b()
-
 def Q7a():
     print 'Q7a'
     for m in [35, 37, 38]:
@@ -11,7 +6,7 @@ def Q7a():
 
 def check_group(m):
     Zm = Integers(m)
-    G =  [Zm(x) for x in Zm.list_of_elements_of_multiplicative_group()]
+    G =  [x for x in Zm if x.is_unit()]
     max_order_element = max(G, key=lambda x: x.multiplicative_order())
     max_order = max_order_element.multiplicative_order()
     max_order_elements = [x for x in G if x.multiplicative_order() == max_order]
@@ -49,4 +44,5 @@ def get_random_unit(Zm):
             return r
 
 if __name__ == '__main__':
-    main()
+    Q7a()
+    Q7b()
