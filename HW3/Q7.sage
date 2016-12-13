@@ -1,3 +1,5 @@
+import random
+
 def Q7a():
     print 'Q7a'
     for m in [35, 37, 38]:
@@ -6,10 +8,10 @@ def Q7a():
 
 def check_group(m):
     Zm = Integers(m)
-    G =  [x for x in Zm if x.is_unit()]
-    max_order_element = max(G, key=lambda x: x.multiplicative_order())
-    max_order = max_order_element.multiplicative_order()
-    max_order_elements = [x for x in G if x.multiplicative_order() == max_order]
+    G =  [x for x in Zm if is_unit(x, m)]
+    G_with_orders = {x: multiplicative_order(x) for x in G}
+    max_order = max(G_with_orders.values())
+    max_order_elements = [x for x, x_order in G_with_orders.items() if x_order == max_order]
     print 'm:', m
     is_cyclic = (max_order == len(G))
     print 'G order: ', len(G)
@@ -17,14 +19,13 @@ def check_group(m):
     print 'is G cyclic?', is_cyclic
     print 'G elements of maximum order:', max_order_elements
 
-
 def Q7b():
     print 'Q7b'
     m = 2**107 - 1
     N = 100000
     Zm = Integers(m)
-    random_units = get_random_units(Zm, N)
-    generators = [x for x in random_units if x.is_primitive_root()]
+    random_units = get_random_units(m, N)
+    generators = [x for x in random_units if is_multiplicative_generator(x, m)]
     A = len(generators)
     print 'N:', N
     print 'A:', A
@@ -34,14 +35,32 @@ def Q7b():
     print 'sampled generators ratio:', float(A) / N
     print 'real generators ratio   :', float(euler_phi(m - 1)) / m
 
-def get_random_units(Zm, count):
-    return [get_random_unit(Zm) for _ in range(count)]
+def get_random_units(m, count):
+    return [get_random_unit(m) for _ in range(count)]
 
-def get_random_unit(Zm):
+def get_random_unit(m):
     while True:
-        r = Zm.random_element()
-        if r.is_unit():
+        r = random.randint(1, m - 1)
+        if is_unit(r, m):
             return r
+
+def is_multiplicative_generator(g, k):
+    phi_k = euler_phi(k)
+    return all(pow(g, phi_k//p, k) != 1 for p, _ in phi_k.factor())
+        
+# Note: Theses functions are already implemented in sage,
+#       but it wasn't clear if we are allowed to use them.
+def is_unit(g, m):
+    # Check if g is invertible in Zm
+    return gcd(g, m) == 1
+
+def multiplicative_order(y):
+    order = 1
+    x = y
+    while x != 1:
+        x *= y
+        order += 1
+    return order
 
 if __name__ == '__main__':
     Q7a()
